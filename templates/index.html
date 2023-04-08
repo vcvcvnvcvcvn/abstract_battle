@@ -14,10 +14,13 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
+            max-width: calc(50% - 20px); /* 添加 max-width 属性 */
+            margin: 0 auto;
         }
         .player-info, .computer-info {
             border: 2px solid #333;
             padding: 10px;
+            flex-basis: 40%; /* 添加 flex-basis 属性 */
         }
         #button-container {
             display: flex;
