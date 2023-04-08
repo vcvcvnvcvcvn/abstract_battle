@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>网页对战游戏</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .player-info, .computer-info {
+            border: 2px solid #333;
+            padding: 10px;
+        }
+        #button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        #history-container {
+            border: 2px solid #333;
+            padding: 10px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="player-info">
+            <img src="static/player.png" width="150" height="150">
+            <h2>玩家</h2>
+            <p>HP: {{ player.hp }}</p>           
+            <p>攻击力: {{ player.attack }}</p>
+            <p>防御成功率: {{ player.defense_success }}</p>
+        </div>
+        <div class="computer-info">
+            <img src="static/enemy.png" width="150" height="150">
+            <h2>电脑</h2>
+            <p>HP: {{ computer.hp }}</p>
+            <p>攻击力: {{ computer.attack }}</p>
+            <p>防御成功率: {{ computer.defense_success }}</p>
+        </div>
+    </div>
+    <div id="button-container">
+        <form action="/attack" method="post">
+            <button type="submit">攻击</button>
+        </form>
+        <form action="/defend" method="post">
+            <button type="submit">防御</button>
+        </form>
+        <form action="/charge" method="post">
+            <button type="submit">充能</button>
+        </form>
+        <form action="/computer_attack" method="post">
+            <button type="submit">电脑攻击</button>
+        </form>
+    </div>
+    <div id="history-container">
+        <h3>历史信息</h3>
+        {% if message %}
+            <pre>{{ message }}</pre>
+        {% endif %}
+    </div>
+</body>
+</html>

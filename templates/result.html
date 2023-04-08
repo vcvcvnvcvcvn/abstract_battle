@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors Game - Result</title>
+</head>
+<body>
+    <h1>{{ result }}</h1>
+    <p>You chose {{ player_choice }}</p>
+    <p>Computer chose {{ computer_choice }}</p>
+    <p>Player HP: {{ player_hp }}</p>
+    <p>Computer HP: {{ computer_hp }}</p>
+    {% if game_over %}
+    <h2>{{ winner }} wins!</h2>
+    {% else %}
+    <form action="/" method="GET">
+        <button type="submit">Play again</button>
+    </form>
+    {% endif %}
+</body>
+</html>
