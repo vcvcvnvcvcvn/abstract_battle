@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>网页对战游戏</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             background-color: #f2f2f2;
             text-align: center;
-        }
-        #container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .player-info, .computer-info {
-            border: 2px solid #333;
-            padding: 10px;
         }
         #button-container {
             display: flex;
@@ -49,22 +38,28 @@
     </style>
 </head>
 <body>
-    <div id="container">
-        <div class="player-info">
-            <img src="static/player_lose.png" width="150" height="150">
-            <h2>玩家失败</h2>
-            <p>HP: {{ player.hp }}</p>           
-            <p>攻击力: {{ player.attack }}</p>
-            <p>防御成功率: {{ player.defense_success }}</p>
-        </div>
-        <div class="computer-info">
-            <img src="static/enemy.png" width="150" height="150">
-            <h2>电脑</h2>
-            <p>HP: {{ computer.hp }}</p>
-            <p>攻击力: {{ computer.attack }}</p>
-            <p>防御成功率: {{ computer.defense_success }}</p>
-        </div>
-    </div>
+    <table width="100%">
+        <tr>
+            <td width="50%">
+                <div class="player-info">
+                    <img src="static/player_lose.png" width="150" height="150">
+                    <h2>玩家</h2>
+                    <p>HP: {{ player.hp }}</p>           
+                    <p>攻击力: {{ player.attack }}</p>
+                    <p>防御成功率: {{ player.defense_success }}</p>
+                </div>
+            </td>
+            <td width="50%">
+                <div class="computer-info">
+                    <img src="static/enemy.png" width="150" height="150">
+                    <h2>电脑</h2>
+                    <p>HP: {{ computer.hp }}</p>
+                    <p>攻击力: {{ computer.attack }}</p>
+                    <p>防御成功率: {{ computer.defense_success }}</p>
+                </div>
+            </td>
+        </tr>
+    </table>
     <div id="button-container">
         <form action="/" method="get">
               <button type="submit">重开</button>
@@ -72,10 +67,7 @@
         </form>
     </div>
     <div id="history-container">
-        <h3>历史信息</h3>
-        {% if message %}
-            <pre>{{ message }}</pre>
-        {% endif %}
+        <h3>你输了！</h3>
     </div>
 </body>
 </html>

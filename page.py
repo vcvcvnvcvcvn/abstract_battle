@@ -28,10 +28,10 @@ def message_update(A_action,B_action):
         'charge':'进行了充能',
         'FAIL':'进行了防守，但是失败了'
     }
-    player_message = '玩家'+message_dict[A_action[0]]
+    player_message = '你刚才'+message_dict[A_action[0]]
     computer_message = '电脑'+message_dict[B_action[0]]
-    tail_message = '双方剩余hp为{}, {}\n'.format(player.hp,computer.hp)
-    return player_message+'; '+computer_message+'; '+tail_message
+    #tail_message = '双方剩余hp为{}, {}\n'.format(player.hp,computer.hp)
+    return player_message+'; '+computer_message#+'; '+tail_message
 
 
 
@@ -101,7 +101,7 @@ def attack():
     computer_action = computer_beh()
     
     battle(player_action,computer_action)
-    message+=message_update(player_action,computer_action)
+    message = message_update(player_action,computer_action)
     if player.hp==0 and computer.hp==0:
         return render_template('tie.html', player=player, computer=computer, message=message)        
     if player.hp <= 0:
@@ -125,7 +125,7 @@ def defend():
     computer_action = computer_beh()
     
     battle(player_action,computer_action)
-    message+=message_update(player_action,computer_action)
+    message = message_update(player_action,computer_action)
     if player.hp==0 and computer.hp==0:
         return render_template('tie.html', player=player, computer=computer, message=message)        
     if player.hp <= 0:
@@ -142,7 +142,7 @@ def charge():
     player.attack+=1
     computer_action = computer_beh()
     battle(player_action,computer_action)
-    message+=message_update(player_action,computer_action)
+    message = message_update(player_action,computer_action)
     if player.hp==0 and computer.hp==0:
         return render_template('tie.html', player=player, computer=computer, message=message)        
     if player.hp <= 0:
