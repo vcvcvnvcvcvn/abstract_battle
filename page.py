@@ -154,4 +154,4 @@ def charge():
 
 
 if __name__ == '__main__':
-    app.run(port=3877)
+    app.run(port=3877,threaded = True)
