@@ -4,20 +4,20 @@ import numpy as np
 
 
 class automation():
-    def __init__(self, max_hp = 5,print_info = True):
+    def __init__(self, max_hp = 5.,print_info = True):
         self.max_hp = max_hp
         self.hp = self.max_hp
-        self.att = 1
-        self.shield_rate = 1
+        self.att = 1.
+        self.shield_rate = 1.
         self.print_info = print_info
     def attack(self):
         damage = self.att
-        self.att = 1
-        self.shield_rate = 1
+        self.att = 1.
+        self.shield_rate = 1.
         return ['attack',damage]
     def charge(self):
-        self.att +=1
-        self.shield_rate = 1
+        self.att +=1.
+        self.shield_rate = 1.
         if self.print_info:
             print('charge:',self.att)
         return ['charge']
@@ -30,7 +30,7 @@ class automation():
         else:
             if self.print_info:
                 print('SHIELD FAIL')
-            self.shield_rate = 1
+            self.shield_rate = 1.
             return ['Fail']
     def random_action(self):
         action = random.choice([0,1,2])
@@ -109,6 +109,13 @@ class random_battle_env():
         self.end = False
         self.reward = 0
         self.result = -1
+    def reset(self):
+        self.enemy = automation(max_hp=5,print_info = False)
+        self.player = automation(print_info = False)
+        self.end = False
+        self.reward = 0
+        self.result = -1
+    
     def get_status(self):
         return np.array([self.enemy.hp,self.enemy.att,self.enemy.shield_rate,self.player.hp,self.player.att,self.player.shield_rate]).astype('float32')
     def step(self,action):
@@ -123,7 +130,7 @@ class random_battle_env():
         #     player_action = self.player.charge()
         enemy_action = self.enemy.random_action()
         battle(self.player,self.enemy,self.player.cmd(action),enemy_action,print_info = False)
-        self.reward = self.player.hp+prev_enemy_hp-prev_player_hp-self.enemy.hp#prev_enemy_hp-self.enemy.hp#
+        self.reward = 0#self.player.hp+prev_enemy_hp-prev_player_hp-self.enemy.hp#prev_enemy_hp-self.enemy.hp#
         if self.player.hp==0 and self.enemy.hp==0:
             self.reward+=0
             self.end = True
@@ -144,12 +151,22 @@ class general_battle_env():
         self.enemy = automation(max_hp=max_hp,print_info = print_info)
         self.player = automation(max_hp=max_hp,print_info = print_info)
         self.end = False
-        self.reward = 0
+        self.reward = [0.,0.]
         self.result = -1
+        self.history = []
         self.print_info = print_info
+    def reset(self):
+        self.enemy = automation(max_hp=5,print_info = False)
+        self.player = automation(print_info = False)
+        self.end = False
+        self.reward = [0.,0.]
+        self.result = -1
+        self.history = []
+
     def get_status(self):
-        return np.array([self.enemy.hp,self.enemy.att,self.enemy.shield_rate,self.player.hp,self.player.att,self.player.shield_rate]).astype('float32')
+        return np.array([self.enemy.hp,self.enemy.att,self.enemy.shield_rate,self.player.hp,self.player.att,self.player.shield_rate]),np.array([self.player.hp,self.player.att,self.player.shield_rate,self.enemy.hp,self.enemy.att,self.enemy.shield_rate])
     def step(self,action_a,action_b):
+        self.history.append([self.get_status()[0],action_a,action_b])
         ###one step
         prev_player_hp = self.player.hp
         prev_enemy_hp = self.enemy.hp
@@ -160,16 +177,16 @@ class general_battle_env():
         # elif action == 2:
         #     player_action = self.player.charge()
         battle(self.player,self.enemy,self.player.cmd(action_a),self.enemy.cmd(action_b),print_info=self.print_info)
-        self.reward = 0#self.player.hp+prev_enemy_hp-prev_player_hp-self.enemy.hp#prev_enemy_hp-self.enemy.hp#
+        #self.reward = [0.,0.]#self.player.hp+prev_enemy_hp-prev_player_hp-self.enemy.hp#prev_enemy_hp-self.enemy.hp#
         if self.player.hp==0 and self.enemy.hp==0:
-            self.reward+=0
+            self.reward = [0.,0.]
             self.end = True
             self.result = 0.5
         elif self.enemy.hp ==0:
             self.end = True
-            self.reward+=1
+            self.reward = [1.,-1.]
             self.result = 1
         elif self.player.hp ==0:
             self.end = True
-            self.reward-=1
+            self.reward = [-1.,1.]
             self.result = 0
