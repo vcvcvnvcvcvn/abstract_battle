@@ -179,7 +179,7 @@ class general_battle_env():
         battle(self.player,self.enemy,self.player.cmd(action_a),self.enemy.cmd(action_b),print_info=self.print_info)
         #self.reward = [0.,0.]#self.player.hp+prev_enemy_hp-prev_player_hp-self.enemy.hp#prev_enemy_hp-self.enemy.hp#
         if self.player.hp==0 and self.enemy.hp==0:
-            self.reward = [0.,0.]
+            self.reward = [-0.5,-0.5]
             self.end = True
             self.result = 0.5
         elif self.enemy.hp ==0:

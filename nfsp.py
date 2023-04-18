@@ -15,23 +15,23 @@ from tqdm.notebook import tqdm
 
 device = 'cpu'
 eps_start = 1
-eps_final = 0.05
-eps_decay = 420000#30000
+eps_final = 0.1
+eps_decay = 1600000#30000
 lr = 0.00005
 gamma = 0.8
 eta = 0.1
 multi_step = 3000
-buffer_size = 5000
-max_frames = 1000000#1500000
+buffer_size = 100000
+max_frames = 4000000#1500000
 n_update_target = 1000
 rl_start = 1000
 sl_start = 1000
-train_freq = 10
-evaluation_interval = 1000
+train_freq = 100
+evaluation_interval = 10000
 batch_size = 64
 from automation import automation,battle,random_battle,random_battle_env,general_battle_env
 
-def pk_ai_sim(model,n_round = 1000):
+def pk_ai_sim(model,n_round = 200):
     win = 0
     n = 0
     ratio = []
